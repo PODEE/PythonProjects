@@ -1,0 +1,18 @@
+def minSum(initial_array):
+    sorted_array = sorted(initial_array)  # sort function to sort initial list in ascending order
+    new_array = [sorted_array[0]]  # new array to hold first element in sorted array above
+
+    for i in range(1, len(sorted_array)):
+        initial_array_element = sorted_array[i]
+        while initial_array_element in new_array:
+            initial_array_element += 1
+            if initial_array_element not in new_array:
+                break
+        new_array.append(initial_array_element)
+
+    print(f"Mininmum sum is {sum(new_array)}")
+    return new_array
+
+
+arr = [10, 0, 0, 2, 1]
+print(minSum(arr))
