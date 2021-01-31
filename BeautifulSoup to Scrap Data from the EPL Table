@@ -1,0 +1,21 @@
+#scrape team names from the English Premier League table
+
+from bs4 import BeautifulSoup
+import requests, lxml, pprint
+
+url = 'https://www.premierleague.com/tables?co=1&se=274&ha=-1'
+html_text = requests.get(url).text
+
+soup = BeautifulSoup(html_text, 'lxml')
+
+premier_leagueteams = []
+league_table = soup.find('table')
+for team in league_table.find_all('tbody', class_ = 'tableBodyContainer isPL'):
+    rows = team.find_all('tr')
+    for row in rows:
+        tab_data = row.find_all('td', class_='team')
+        for item in tab_data:
+            pl_team = item.find('span', class_='long').text.strip()
+            premier_leagueteams.append(pl_team)
+
+pprint.pprint(premier_leagueteams)
